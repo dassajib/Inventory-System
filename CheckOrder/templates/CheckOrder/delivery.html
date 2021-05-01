@@ -1,0 +1,69 @@
+{% extends 'CheckOrder/base.html' %}
+{% block content %}
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="text-center alert alert-info">All Delivery Goods</h1>
+        </div>
+        <div class=col-lg-3>
+            <h5 class="text-center alert alert-info">Delivered Goods</h5>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" class="btn btn-success" value="ADD">
+            </form>
+        </div>
+        <div class="col-lg-9">
+            <h5 class="text-center alert alert-info">Delivered Goods Details</h5>
+
+            {% if view2 %}
+
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Goods Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Delivery Date</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for viewing2 in view2 %}
+
+                      <tr>
+                        <th scope="row">{{viewing2.Name}}</th>
+                        <td>{{viewing2.Goods_Name}}</td>
+                        <td>{{viewing2.Quantity}}</td>
+                        <td>{{viewing2.Order_Date}}</td>
+                        <td>{{viewing2.Delivery_Date}}</td>
+                        <td>
+                          <a href="{% url 'update_delivery' viewing2.id %}" class="btn btn-warning btn-sm">Edit</a>
+                          <br>
+                          <form action="{% url 'delete' viewing2.id %}" method="POST" class="d-inline">
+                            {% csrf_token %}
+                              <input type="submit" class="btn btn-success btn-sm" value="Delete">
+                          </form>
+                        </td>
+                      </tr>
+                    </tbody>
+
+                    {% endfor %}
+
+                </table>
+
+            {% else %}
+
+            <h3 class="text-center alert alert-warning">No Record</h3>
+
+            {% endif %}
+
+        </div>
+             
+    </div>
+</div>
+
+{% endblock content %}
